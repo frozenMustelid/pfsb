@@ -1,4 +1,5 @@
 bin/pfsb:
+	mkdir bin/
 	g++ -v -std=c++14 -o bin/pfsb src/pfsb.cpp
 
 .PHONY: install clean uninstall
@@ -14,7 +15,7 @@ install:
 	cp bin/pfsb /usr/bin
 
 clean:
-	@rm bin/pfsb
+	@rm -r bin/
 
 
 #CSS file left alone so that generated monsters still display correctly
