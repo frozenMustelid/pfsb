@@ -1,0 +1,9 @@
+1. A C++ compiler that supports C++14.
+2. Better make sura that compiler is G++. There's no program logic tied to the
+	compiler or its extensions, but the Makefile won't work if it can't use G++
+	to compile.
+3. A /usr/bin folder.
+4. A /usr/share folder.
+5. A web browser. Strictly speaking, the browser isn't necessary, but unless you
+	prefer reading raw HTML over a nicely CSS-styled HTML document, you'll want
+	one.

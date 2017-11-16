@@ -1,0 +1,71 @@
+<html>
+<meta charset="utf-8">
+	<head>
+		<title>$PF_MON</title>
+		<link rel="stylesheet" type="text/css" href="/usr/share/pfsb/pfrpg/html/pfrpg.css">
+	</head>
+
+	<body>
+		<p id="monheader">$MONNAME <span id="cr">CR $CR</span> <img class="headericon" width=100em src="/usr/share/pfsb/pfrpg/images/temp/$CLIMATE.svg"/> <img class="headericon" width=100em src="/usr/share/pfsb/pfrpg/images/environ/$ENVIRON.svg"/> <img class="headericon" width=100em src=/usr/share/pfsb/pfrpg/images/type/$CREATTY.svg/></p>
+<!----------------------------------------------------------------------------->
+		<p id="xp">XP $XP</p>
+		<p>$ALIGN $SIZE $CREATTY ($SUBTYPE)</p>
+		<p><span class="itemheader">Init</span> $INIT; <span class="itemheader">Senses</span> $SENSES</p>
+		<p><span class="itemheader">Aura</span> $AURA;</p>
+
+<!----------------------------------------------------------------------------->
+		<div class="sectionheader">DEFENSE</div>
+<!----------------------------------------------------------------------------->
+		<p><span class="itemheader">AC</span> $REGAC, $TOUCHAC, $FLATFOO $ACBREAK</p>
+		<p><span class="itemheader">hp</span> $HP ($HPBREAK)</p>
+		<p><span class="itemheader">Fort</span> $FORTSAV, <span class="itemheader">Ref</span> $REFSAVE, <span class="itemheader">Will</span> $WILLSAV</p>
+		<p><span class="itemheader">Defensive Abilities</span> $DEFABLE; <span class="itemheader">Immune</span> $IMMUNE</p>
+		<!--p><span class="itemheader">DR</span> $DR; <span class="itemheader">SR</span> $SR</p-->
+
+<!----------------------------------------------------------------------------->
+		<div class="sectionheader">OFFENSE</div>
+<!----------------------------------------------------------------------------->
+		<p><span class="itemheader">Speed</span> $SPEED</p>
+		<p><span class="itemheader">Melee</span> $MELEE</p>
+		<p><span class="itemheader">Ranged</span> $RANGED</p>
+		<p><span class="itemheader">Space</span> $SPACE; <span class="itemheader">Reach</span> $REACH</p>
+		<p><span class="itemheader">Special Attacks</span> $SPECATK</p>
+		<!--p><span class="itemheader">Spell-Like Abilities</span> $SLA</p-->
+
+<!----------------------------------------------------------------------------->
+		<div class="sectionheader">STATISTICS</div>
+<!----------------------------------------------------------------------------->
+		<p><span class="itemheader">Str</span> $STR, <span class="itemheader">Dex</span> $DEX, <span class="itemheader">Con</span> $CON, <span class="itemheader">Int</span> $INT, <span class="itemheader">Wis</span> $WIS, <span class="itemheader">Cha</span> $CHA</p>
+		<p><span class="itemheader">Base Atk</span> $BAB; <span class="itemheader">CMB</span> $CMB ($SPECCMB); <span class="itemheader">CMD</span> $CMD ($SPECCMD)</p>
+		<p><span class="itemheader">Feats</span> $FEATLIS</p>
+		<p><span class="itemheader">Skills</span> $SKILIST</p>
+		<p><span class="itemheader">Languages</span> $LANGLIS</p>
+		<p><span class="itemheader">SQ</span> $SQLIST</p>
+
+<!----------------------------------------------------------------------------->
+		<div class="sectionheader">ECOLOGY</div>
+<!----------------------------------------------------------------------------->
+		<p><span class="itemheader">Environment</span> $ENVLIST</p>
+		<p><span class="itemheader">Organization</span> $GRPLIST</p>
+		<p><span class="itemheader">Treasure</span> $LOOTLST</p>
+
+<!----------------------------------------------------------------------------->
+		<div class="sectionheader">SPECIAL ABILITIES</div>
+<!----------------------------------------------------------------------------->
+		<p>$SPECABL</p>
+	</body>
+</html>
+
+
+<!--
+
+This section includes things useful for quick copy-pasting.
+
+<span class="itemheader"></span>
+		<p></p>
+		<p><span class="itemheader"></span></p>
+		<div class="sectionheader">DEFENSE</div>
+
+-->
+
+<!----------------------------------------------------------------------------->
