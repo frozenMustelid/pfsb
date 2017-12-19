@@ -1,0 +1,29 @@
+     This file follows the example of the Linux kernel's CREDITS file.
+     People who submit changes are expected to add themselves to this
+     file.
+
+     (N) is name.
+     (E) is email.
+     (W) is web address.
+     (D) is a brief description of the person's contribution.
+          "Contribution" can mean someone directly sent a pull request or
+          patch to me, or it can mean that I found a piece of license-
+          compatible code and decided to use it.
+     (S) is the date of acknowledgement and agreement to the
+          contributor agreement. Effectively an electronic signature.
+
+     If you wish to remain an anonymous contributor or otherwise not post
+     your N/E/W/D(s), write "Anonymous" or something similar in the appropriate
+     fields. If you don't write anything for (S), your change will be
+     rejected, so please don't forget to add yourself.
+
+     Above message last updated in v00.002.
+     Listings below last updated 2017-12-18.
+--------------------------------------------------------------------------------
+(N) Frozen Mustelid
+(E) hppyhnd@yahoo.com
+(W) N/A
+(D) Project owner/maintainer, main program designer/programmer
+(S) Unnecessary, project owner
+
+

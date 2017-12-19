@@ -1,16 +1,28 @@
 Current:
-	*DR and SR not implemented due to oversight
-	*SLAs not implemented... Yet.
-	*Program does little user entry verification and is fragile as a result
-	*Only creature icon implemented is "construct"
-	*No icons for environment or climate
-	*No logic to pick an icon for environment or client
-	*Program, despite being written in standard C++14, only runs on *nix
-	*Program, despite being written in standard C++14, requires G++
-	*Program produces unrepresentable characters at the end of the file. I
-		suspect that this is an extra  EOF character. xed renders this
-		as umlaut y when I set the html charset tage to utf-8, but
-		without that tag, xed instead renders '\FF'. Firefox renders
-		these as question mark diamonds.
+    *No icons for environment or climate
+    *No logic to pick an icon for environment or client
+    *Only creature icon implemented is "construct"
+    *Program, despite being written in standard C++14, only runs on *nix
+    *Program, despite being written in standard C++14, requires G++
+    *Program does little user entry verification and is fragile as a result
+    *Program is not distributed as Free Software
+    *Program produces unrepresentable characters at the end of the file. I
+        suspect that this is an extra  EOF character. xed renders this
+        as umlaut y when I set the HTML charset tag to utf-8, but
+        without that tag, xed instead renders '\FF'. Firefox renders
+        these as question mark diamonds.
+    *SLAs not implemented... Yet.
+    *XP value always has at least 1 extra space. However, this doesn't appear to
+        actually render.
 
-Changed:
+
+Changed since last release:
+    +Program is not distributed as Free Software
+    +XP value always has at least 1 extra space. However, this doesn't appear to
+        actually render.
+
+    -DR and SR not implemented due to oversight
+    -The program will produce empty parentheses next to the the creature type if
+        there are no subtypes.
+
+    *Sorted list

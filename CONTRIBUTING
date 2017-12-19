@@ -1,0 +1,37 @@
+Should be pretty simple. Download. Read the CONTRIBUTOR AGREEMENT. Make changes.
+Document changes. Add self to CONTRIBUTORS file, using any name you choose (or
+be anonymous if you prefer). Send changed files back using whatever method you
+prefer.
+
+For some changes (like adding new games to PFSB's monster generator), you may
+want to read the OGL too. A copy should have been included with the program, as
+should the CONTRIBUTORS file. It shouldn't be necessary to update the OGL's
+copyright notice.
+
+Is is preferred that you try to match styles with the existing codebase. This
+doesn't have to include profane rants or sophomoric jokes in the code comments,
+but it can if you feel it's warranted. Matching styles includes keeping the
+documentation cat-friendly.
+
+Also preferred is testing your changes. See if it still builds, didn't include
+too many regressions, the fix actually fixes what it's supposed to fix, etc.
+Obviously pobody's nerfect, but a modicum of testing helps out immensely. Note:
+If it doesn't build on my machine, AFAIC it doesn't build on anyone's machine
+except maybe the submitter's.
+
+That said: If you send me something better than what I have, I'll almost 
+certainly include it. Even a half-baked implementation is better than no
+implementation, unless it somehow reduces functionality of working things.
+
+
+ROADMAP
+     *SLAs and spells planned for 0.3
+     *GUI will probably show up before 1.0
+     *Save/load IP creatures expected to appear with GUI.
+     *Change to a PDF output will likely be near the 1.0 release. As long as the
+          output remains HTML-based, it is expected that the program may make
+          mistakes that the user will have to correct by manually editing the
+          HTML file.
+     *Move all OGL stuff to a seperate repo, which PFSB grabs as part of the
+          install/build process. Probably pre-1.0, maybe even before 0.10.
+     *Templates are complicated, almost definitely post-1.0

@@ -3,8 +3,7 @@
 
 //#define _DEBUG
 
-#define _VERSION 0.1
+#define _VERSION "0.2"
 
 
 #endif
-

@@ -1,2 +1,51 @@
+Legend
+     +Is added/improved functionality
+     -Is a regression
+     *Is a change that is neutral or invisible as far as the user is concerned
+     ~Is a bugfix
+
+v00.002
+
+     +Added a total uninstall option to the Makefile
+     +All non-source text files now use Windows-style line endings.
+     +Corrected a few instances of incorrect spacing
+     +If you tell the program you took the Improved Initiative feat, it will add
+          that feat to the feat list
+     +If you tell the program you took the Agile Maneuvers feat, it will add
+          that feat to the feat list
+     +Special abilities are prettier now.
+     +Most text now properly spaced for a standard 80x24 terminal window
+     +XP now includes commas
+     +You can now add DR to your monsters
+     +You can now add SR to your monsters
+     +You can now add weaknesses to your monsters
+
+     *Added contributor agreement
+     *Added/updated various other contributing-related documents
+     *Attempted to remove all instances of spaces as indention in souce files
+     *Attempted to remove tabs on otherwise empty lines
+     *HTML/CSS comments of finished monsters list template and program version
+     *HTML/CSS comments of template list template version
+     *Makefile now slightly quieter.
+     *Now accepting submissions. Read CONTRIBUTING for more info.
+     *Rearranged internals to be more maintainable
+     *Updated Known Issues.txt
+     *Updated OGL copyright notice to include an "and contributors" line.
+          --version text updated with similar information.
+     *Updated README.txt
+     *Upgraded Makefile to play nice with multi-file compilation. It's also more
+          granular.
+
+     ~Fixed an issue that prevented users from creating very small constructs
+     ~Fixed an issue where high-CR monsters could have incorrect XP on systems
+          that use a 32-bit int
+     ~Fixed an issue with HP calculation
+     ~Fixed a typo in DEPENDENCIES.txt
+     ~Low (>10) ability scores no longer produce modifiers 1 higher than they
+          should
+     ~The program will no longer produce empty parentheses next to the the
+          creature type if there are no subtypes.
+
+
 v00.001
-	*Initial release
+     *Initial release

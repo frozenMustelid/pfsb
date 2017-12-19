@@ -1,3 +1,7 @@
+<!-- Monster made using PFSB. Find it at https://github.com/frozenMustelid/pfsb
+----
+---- HTML Template version 0.2. Program version $PROGVER.                    -->
+
 <html>
 <meta charset="utf-8">
 	<head>
@@ -9,7 +13,7 @@
 		<p id="monheader">$MONNAME <span id="cr">CR $CR</span> <img class="headericon" width=100em src="/usr/share/pfsb/pfrpg/images/temp/$CLIMATE.svg"/> <img class="headericon" width=100em src="/usr/share/pfsb/pfrpg/images/environ/$ENVIRON.svg"/> <img class="headericon" width=100em src=/usr/share/pfsb/pfrpg/images/type/$CREATTY.svg/></p>
 <!----------------------------------------------------------------------------->
 		<p id="xp">XP $XP</p>
-		<p>$ALIGN $SIZE $CREATTY ($SUBTYPE)</p>
+		<p>$ALIGN $SIZE $CREATTY $SUBTYPE</p>
 		<p><span class="itemheader">Init</span> $INIT; <span class="itemheader">Senses</span> $SENSES</p>
 		<p><span class="itemheader">Aura</span> $AURA;</p>
 
@@ -20,7 +24,12 @@
 		<p><span class="itemheader">hp</span> $HP ($HPBREAK)</p>
 		<p><span class="itemheader">Fort</span> $FORTSAV, <span class="itemheader">Ref</span> $REFSAVE, <span class="itemheader">Will</span> $WILLSAV</p>
 		<p><span class="itemheader">Defensive Abilities</span> $DEFABLE; <span class="itemheader">Immune</span> $IMMUNE</p>
-		<!--p><span class="itemheader">DR</span> $DR; <span class="itemheader">SR</span> $SR</p-->
+		<p><span class="itemheader">Resist</span> $RESIST; <span class="itemheader">Weaknesses</span> $WEAK</p>
+		<p><span class="itemheader">DR</span> $DR; <span class="itemheader">SR</span> $SR</p>
+
+		<!-- Actually out of order. The correct order sees Defensive Abilities
+        ---- and onwards through the end of the section alphabetized.        -->
+
 
 <!----------------------------------------------------------------------------->
 		<div class="sectionheader">OFFENSE</div>
@@ -52,7 +61,7 @@
 <!----------------------------------------------------------------------------->
 		<div class="sectionheader">SPECIAL ABILITIES</div>
 <!----------------------------------------------------------------------------->
-		<p>$SPECABL</p>
+		$SPECABL
 	</body>
 </html>
 
