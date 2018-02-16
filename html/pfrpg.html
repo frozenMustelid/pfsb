@@ -1,30 +1,34 @@
 <!-- Monster made using PFSB. Find it at https://github.com/frozenMustelid/pfsb
 ----
----- HTML Template version 0.2. Program version $PROGVER.                    -->
+---- HTML Template version 0.3-dev-2018-01-11. Program version $PROGRAM_VERSION.            -->
 
 <html>
 <meta charset="utf-8">
 	<head>
-		<title>$PF_MON</title>
+		<title>$PFRPG_MONNAME</title>
 		<link rel="stylesheet" type="text/css" href="/usr/share/pfsb/pfrpg/html/pfrpg.css">
 	</head>
 
 	<body>
-		<p id="monheader">$MONNAME <span id="cr">CR $CR</span> <img class="headericon" width=100em src="/usr/share/pfsb/pfrpg/images/temp/$CLIMATE.svg"/> <img class="headericon" width=100em src="/usr/share/pfsb/pfrpg/images/environ/$ENVIRON.svg"/> <img class="headericon" width=100em src=/usr/share/pfsb/pfrpg/images/type/$CREATTY.svg/></p>
+		<p>Delete the local style sheet link</p>
+		<p id="monname">$MONSTER_NAME_TOP</p>
+		<p id="mondesc">$MONSTER_DESCRIPTION</p>
+
+		<p id="monheader">$MONSTER_NAME <span id="cr">CR $CR</span> <img class="headericon" width=100em src="/usr/share/pfsb/pfrpg/images/temp/$CLIMATE.svg"/> <img class="headericon" width=100em src="/usr/share/pfsb/pfrpg/images/environ/$ENVIRONMENT.svg"/> <img class="headericon" width=100em src=/usr/share/pfsb/pfrpg/images/type/construct.svg/></p>
 <!----------------------------------------------------------------------------->
 		<p id="xp">XP $XP</p>
-		<p>$ALIGN $SIZE $CREATTY $SUBTYPE</p>
-		<p><span class="itemheader">Init</span> $INIT; <span class="itemheader">Senses</span> $SENSES</p>
+		<p>$ALIGNMENT $SIZE $CREATURE_TYPE $SUBTYPES</p>
+		<p><span class="itemheader">Init</span> $INITIATIVE; <span class="itemheader">Senses</span> $SENSES</p>
 		<p><span class="itemheader">Aura</span> $AURA;</p>
 
 <!----------------------------------------------------------------------------->
 		<div class="sectionheader">DEFENSE</div>
 <!----------------------------------------------------------------------------->
-		<p><span class="itemheader">AC</span> $REGAC, $TOUCHAC, $FLATFOO $ACBREAK</p>
-		<p><span class="itemheader">hp</span> $HP ($HPBREAK)</p>
-		<p><span class="itemheader">Fort</span> $FORTSAV, <span class="itemheader">Ref</span> $REFSAVE, <span class="itemheader">Will</span> $WILLSAV</p>
-		<p><span class="itemheader">Defensive Abilities</span> $DEFABLE; <span class="itemheader">Immune</span> $IMMUNE</p>
-		<p><span class="itemheader">Resist</span> $RESIST; <span class="itemheader">Weaknesses</span> $WEAK</p>
+		<p><span class="itemheader">AC</span> $NORMAL_AC, $TOUCH_AC, $FLATFOOT_AC $BREAKDOWN_AC</p>
+		<p><span class="itemheader">hp</span> $HP ($BREAKDOWN_HP)</p>
+		<p><span class="itemheader">Fort</span> $FORTITUDE_SAVE, <span class="itemheader">Ref</span> $REFLEX_SAVE, <span class="itemheader">Will</span> $WILL_SAVE</p>
+		<p><span class="itemheader">Defensive Abilities</span> $DEFENSIVE_ABILITIES; <span class="itemheader">Immune</span> $IMMUNITIES</p>
+		<p><span class="itemheader">Resist</span> $RESISTANCES; <span class="itemheader">Weaknesses</span> $WEAKNESSES</p>
 		<p><span class="itemheader">DR</span> $DR; <span class="itemheader">SR</span> $SR</p>
 
 		<!-- Actually out of order. The correct order sees Defensive Abilities
@@ -35,33 +39,35 @@
 		<div class="sectionheader">OFFENSE</div>
 <!----------------------------------------------------------------------------->
 		<p><span class="itemheader">Speed</span> $SPEED</p>
-		<p><span class="itemheader">Melee</span> $MELEE</p>
-		<p><span class="itemheader">Ranged</span> $RANGED</p>
+		<p><span class="itemheader">Melee</span> $MELEE_FULL_ATTACK</p>
+		<p><span class="itemheader">Ranged</span> $RANGED_FULL_ATTACK</p>
 		<p><span class="itemheader">Space</span> $SPACE; <span class="itemheader">Reach</span> $REACH</p>
-		<p><span class="itemheader">Special Attacks</span> $SPECATK</p>
-		<!--p><span class="itemheader">Spell-Like Abilities</span> $SLA</p-->
+		<p><span class="itemheader">Special Attacks</span> $SPECIAL_ATTACKS</p>
+		<p><span class="itemheader">Spell-Like Abilities</span> $SLA</p>
+
+<!-- <ul div class="sla"><li>At will: </li><li>3/Day: </li><li>1/Day: </li></ul> -->
 
 <!----------------------------------------------------------------------------->
 		<div class="sectionheader">STATISTICS</div>
 <!----------------------------------------------------------------------------->
 		<p><span class="itemheader">Str</span> $STR, <span class="itemheader">Dex</span> $DEX, <span class="itemheader">Con</span> $CON, <span class="itemheader">Int</span> $INT, <span class="itemheader">Wis</span> $WIS, <span class="itemheader">Cha</span> $CHA</p>
-		<p><span class="itemheader">Base Atk</span> $BAB; <span class="itemheader">CMB</span> $CMB ($SPECCMB); <span class="itemheader">CMD</span> $CMD ($SPECCMD)</p>
-		<p><span class="itemheader">Feats</span> $FEATLIS</p>
-		<p><span class="itemheader">Skills</span> $SKILIST</p>
-		<p><span class="itemheader">Languages</span> $LANGLIS</p>
-		<p><span class="itemheader">SQ</span> $SQLIST</p>
+		<p><span class="itemheader">Base Atk</span> $BAB; <span class="itemheader">CMB</span> $CMB $SPECIAL_CMB; <span class="itemheader">CMD</span> $CMD $SPECIAL_CMD</p>
+		<p><span class="itemheader">Feats</span> $FEAT_LIST</p>
+		<p><span class="itemheader">Skills</span> $SKILL_LIST</p>
+		<p><span class="itemheader">Languages</span> $LANGUAGE_LIST</p>
+		<p><span class="itemheader">SQ</span> $SPECIAL_QUALITIES_LIST</p>
 
 <!----------------------------------------------------------------------------->
 		<div class="sectionheader">ECOLOGY</div>
 <!----------------------------------------------------------------------------->
-		<p><span class="itemheader">Environment</span> $ENVLIST</p>
-		<p><span class="itemheader">Organization</span> $GRPLIST</p>
-		<p><span class="itemheader">Treasure</span> $LOOTLST</p>
+		<p><span class="itemheader">Environment</span> $ENVIRONMENT_LIST</p>
+		<p><span class="itemheader">Organization</span> $GROUPING_LIST</p>
+		<p><span class="itemheader">Treasure</span> $ITEM_LIST</p>
 
 <!----------------------------------------------------------------------------->
 		<div class="sectionheader">SPECIAL ABILITIES</div>
 <!----------------------------------------------------------------------------->
-		$SPECABL
+		$SPECIAL_ABILITIES
 	</body>
 </html>
 

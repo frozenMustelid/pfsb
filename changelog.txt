@@ -4,6 +4,18 @@ Legend
      *Is a change that is neutral or invisible as far as the user is concerned
      ~Is a bugfix
 
+v00.003
+
+     +Added creature description field
+     +Added larger creature name field at top
+     +Added SLAs
+     +Improved alignment selector
+
+	 *Added new files, moved some code from old files the new ones
+	 *Changed #define macros from _MACRO_NAME to _macro_name
+     *Updated Known Issues.txt
+	 *Template file now uses more descriptive names
+
 v00.002
 
      +Added a total uninstall option to the Makefile

@@ -35,7 +35,9 @@ To use:
      phone.
 
 
-Also note that make uninstall intentionally leaves the CSS file where it is, so that existing files will still display correctly. To remove everything, run `make total-uninstall`.
+Also note that make uninstall intentionally leaves the CSS file where it is, so
+that existing files will still display correctly. To remove everything, run
+`make total-uninstall`.
 
 
 As written, this version of the program will only function on *nix systems, but

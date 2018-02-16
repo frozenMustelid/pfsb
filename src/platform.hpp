@@ -1,27 +1,28 @@
 #ifndef PLATFORM_HPP
 #define PLATFORM_HPP
 
-#define _PLATFAM __unix
-#define _PLATFORM __linux
+#define PLATFAM_ __unix
+//#define PLATFORM_ __linux
 
-//_PLATFORM currently unused
+//PLATFORM_ currently unused
+//commented out to make it compile+run on other *nixes
 
-#ifdef __unix
-	#define _PFRPG_TEMPLATE "/usr/share/pfsb/pfrpg/html/pfrpg.html"
-	#define _DIR_SEPARATOR_CHAR '/'
+//#ifdef __unix
+	#define _pfrpg_template "/usr/share/pfsb/pfrpg/html/pfrpg.html"
+	#define _dir_separator_char '/'
 	//Pretty sure the char is unused
-	#define _DIR_SEPARATOR_STRING "/"
-#endif
+	#define _dir_separator_string "/"
+//#endif
 
-/*#ifdef (_WIN32)
+/*#ifdef (WIN32_)
 
  * Commented out because unfinished
  * Also because I didn't bother to look up the Windows preprocessor test
  * Also because I don't like to release untested code
 
-	#define _PFRPG_TEMPLATE "/usr/share/pfsb/pfrpg/html/pfrpg.html"
-	#define _DIR_SEPARATOR_CHAR '\'
-	#define _DIR_SEPARATOR_STRING "\"
+	#define _pfrpg_template "/usr/share/pfsb/pfrpg/html/pfrpg.html"
+	#define _dir_separator_char '\\'
+	#define _dir_separator_string "\\"
 #endif*/
 
 #endif

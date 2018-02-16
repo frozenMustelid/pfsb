@@ -1,8 +1,9 @@
 #include "errors.hpp"
-#include "pfMon.hpp"
+#include "PfMon.hpp"
 #include "platform.hpp"
 #include "version.hpp"
 
+//#include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <string>
@@ -18,7 +19,7 @@ void printHelp();
 void printOgl();
 void printVersion();
 
-void selectGame(int argc, char**argv);
+void selectGame(int argc, char** argv);
 void doPf();
 
 void insertIntoFile(fstream& monster, const char* toInsert, long beforeDollar, int keyLength, const char* baseFileName);
@@ -30,17 +31,17 @@ int main(int argc, char** argv) {
 		if (argc == 1) {
 		doPf();
 
-		#ifdef _DEBUG
+		#ifdef DEBUG_
 		cout << "Exited doProgram()" << endl;
 		#endif
 
 		exit(0);
 	} else if (argc == 2) {
 /******************************************************************************/
-#if (_PLATFAM == __unix)
+#if (PLATFAM_ == __unix)
 		if (!strcmp("--help",argv[1])) {
 #endif
-#if (_PLATFAM == __WIN32)
+#if (PLATFAM_ == WIN32_)
 		if (!strcmp("/?",argv[1])) {
 #endif
 /******************************************************************************/
@@ -48,10 +49,10 @@ int main(int argc, char** argv) {
 			exit(0);
 	}
 /******************************************************************************/
-#if (_PLATFAM == __unix)
+#if (PLATFAM_ == __unix)
 		if (!strcmp("--ogl",argv[1])) {
 #endif
-#if (_PLATFAM == __WIN32)
+#if (PLATFAM_ == WIN32_)
 		if (!strcmp("/o",argv[1])) {
 #endif
 /******************************************************************************/
@@ -98,12 +99,15 @@ void doPf() {
  *                                  MONSTER                                  *
 \*****************************************************************************/
 
-	
-	#ifdef _DEBUG
+
+	#ifdef DEBUG_
 	cout << "Monster name: " << monster.monName << endl;
 	cout << "File path: " << monster.fileName << endl;
 	#endif
-	
+
+	monster.fetchMonNameTop();
+	monster.fetchDescription();
+
 	monster.crAndXp();
 	monster.fetchAlignment();
 	monster.fetchSize();
@@ -132,6 +136,7 @@ void doPf() {
 	monster.calculateSpace();
 	monster.determineReach();
 	monster.fetchSpecialAttacks();
+	monster.determineSlas();
 
 	monster.determineCombatManeuvers();
 	monster.fetchFeats();
@@ -145,7 +150,7 @@ void doPf() {
 
 	monster.fetchSpecialAbilities(); //*/
 
-	#ifndef _DEBUG
+	#ifndef DEBUG_
 	monster.prepareWrite();
 	#else
 	cout << monster.prepareWrite();
@@ -156,68 +161,71 @@ void doPf() {
  *                                WRITE FILE                                 *
 \*****************************************************************************/
 
-	findAndReplace(monster.file,_VERSION,u8"PROGVER",monster.fileName);
+	findAndReplace(monster.file,VERSION_,u8"PROGRAM_VERSION",monster.fileName);
 
 	tempStorage = "PFSB - ";
 	tempStorage += monster.monName;
-	findAndReplace(monster.file,tempStorage.c_str(),u8"PF_MON",monster.fileName);
-	#ifdef _DEBUG
+	findAndReplace(monster.file,tempStorage.c_str(),u8"PFRPG_MONNAME",monster.fileName);
+	#ifdef DEBUG_
 	cout << "Monster header written" << endl;
 	#endif
 
-	findAndReplace(monster.file,monster.monName.c_str(),u8"MONNAME",monster.fileName);
-	#ifdef _DEBUG
+	findAndReplace(monster.file,monster.monNameTop.c_str(),u8"MONSTER_NAME_TOP",monster.fileName);
+	findAndReplace(monster.file,monster.description.c_str(),u8"MONSTER_DESCRIPTION",monster.fileName);
+
+	findAndReplace(monster.file,monster.monName.c_str(),u8"MONSTER_NAME",monster.fileName);
+	#ifdef DEBUG_
 	cout << "Monname written" << endl;
 	#endif
 
 	findAndReplace(monster.file,monster.cr,u8"CR",monster.fileName);
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "CR written" << endl;
 	#endif
 	findAndReplace(monster.file,(monster.xp.c_str()),u8"XP",monster.fileName);
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "XP written" << endl;
 	cout << endl << endl << endl << "Value (c++-string): " << monster.xp << endl << endl << endl;
 	cout << endl << endl << endl << "Value (c - string): " << monster.xp.c_str() << endl << endl << endl;
 	#endif
-	findAndReplace(monster.file,monster.alignment,u8"ALIGN",monster.fileName);
-	#ifdef _DEBUG
+	findAndReplace(monster.file,monster.alignment.c_str(),u8"ALIGNMENT",monster.fileName);
+	#ifdef DEBUG_
 	cout << "Alignment written" << endl;
 	#endif
 	findAndReplace(monster.file,monster.creatSizeWords.c_str(),u8"SIZE",monster.fileName);
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "Size written: " << monster.creatSizeWords << endl;
 	#endif
 
-	findAndReplace(monster.file,monster.creatTypeWords.c_str(),u8"CREATTY",monster.fileName);
-	findAndReplace(monster.file,monster.creatTypeWords.c_str(),u8"CREATTY",monster.fileName);
+	findAndReplace(monster.file,monster.creatTypeWords.c_str(),u8"CREATURE_TYPE",monster.fileName);
+	findAndReplace(monster.file,monster.creatTypeWords.c_str(),u8"CREATURE_TYPE",monster.fileName);
 
-	findAndReplace(monster.file,monster.subtypes.c_str(),u8"SUBTYPE",monster.fileName);
-	findAndReplace(monster.file,to_string(monster.initiative).c_str(),u8"INIT",monster.fileName);
+	findAndReplace(monster.file,monster.subtypes.c_str(),u8"SUBTYPES",monster.fileName);
+	findAndReplace(monster.file,to_string(monster.initiative).c_str(),u8"INITIATIVE",monster.fileName);
 	findAndReplace(monster.file,monster.senses.c_str(),u8"SENSES",monster.fileName);
 	findAndReplace(monster.file,monster.aura.c_str(),u8"AURA",monster.fileName);
 
 
 
 
-	findAndReplace(monster.file,to_string(monster.ac.totalAc).c_str(),u8"REGAC",monster.fileName);
+	findAndReplace(monster.file,to_string(monster.ac.totalAc).c_str(),u8"NORMAL_AC",monster.fileName);
 	tempStorage = "touch ";
-	findAndReplace(monster.file,(tempStorage + to_string(monster.ac.touchAc)).c_str(),u8"TOUCHAC",monster.fileName);
+	findAndReplace(monster.file,(tempStorage + to_string(monster.ac.touchAc)).c_str(),u8"TOUCH_AC",monster.fileName);
 	tempStorage = "flat-footed ";
-	findAndReplace(monster.file,(tempStorage + to_string(monster.ac.flatFootAc)).c_str(),u8"FLATFOO",monster.fileName);
-	findAndReplace(monster.file,monster.ac.breakdown.c_str(),u8"ACBREAK",monster.fileName);
+	findAndReplace(monster.file,(tempStorage + to_string(monster.ac.flatFootAc)).c_str(),u8"FLATFOOT_AC",monster.fileName);
+	findAndReplace(monster.file,monster.ac.breakdown.c_str(),u8"BREAKDOWN_AC",monster.fileName);
 
 	findAndReplace(monster.file,to_string(monster.hp).c_str(),u8"HP",monster.fileName);
-	findAndReplace(monster.file,monster.hpBreakdown.c_str(),u8"HPBREAK",monster.fileName);
+	findAndReplace(monster.file,monster.hpBreakdown.c_str(),u8"BREAKDOWN_HP",monster.fileName);
 
-	findAndReplace(monster.file,to_string(monster.saves.fort).c_str(),u8"FORTSAV",monster.fileName);
-	findAndReplace(monster.file,to_string(monster.saves.reflex).c_str(),u8"REFSAVE",monster.fileName);
-	findAndReplace(monster.file,to_string(monster.saves.will).c_str(),u8"WILLSAV",monster.fileName);
+	findAndReplace(monster.file,to_string(monster.saves.fort).c_str(),u8"FORTITUDE_SAVE",monster.fileName);
+	findAndReplace(monster.file,to_string(monster.saves.reflex).c_str(),u8"REFLEX_SAVE",monster.fileName);
+	findAndReplace(monster.file,to_string(monster.saves.will).c_str(),u8"WILL_SAVE",monster.fileName);
 
-	findAndReplace(monster.file,monster.defensiveAbilities.c_str(),u8"DEFABLE",monster.fileName);
-	findAndReplace(monster.file,monster.immunities.c_str(),u8"IMMUNE",monster.fileName);
-	findAndReplace(monster.file,monster.resistances.c_str(),u8"RESIST",monster.fileName);
-	findAndReplace(monster.file,monster.weaknesses.c_str(),u8"WEAK",monster.fileName);
+	findAndReplace(monster.file,monster.defensiveAbilities.c_str(),u8"DEFENSIVE_ABILITIES",monster.fileName);
+	findAndReplace(monster.file,monster.immunities.c_str(),u8"IMMUNITIES",monster.fileName);
+	findAndReplace(monster.file,monster.resistances.c_str(),u8"RESISTANCES",monster.fileName);
+	findAndReplace(monster.file,monster.weaknesses.c_str(),u8"WEAKNESSES",monster.fileName);
 
 	findAndReplace(monster.file,monster.dr.c_str(),u8"DR",monster.fileName);
 	findAndReplace(monster.file,monster.sr.c_str(),u8"SR",monster.fileName);
@@ -227,13 +235,15 @@ void doPf() {
 
 	findAndReplace(monster.file,monster.speed.c_str(),u8"SPEED",monster.fileName);
 
-	findAndReplace(monster.file,monster.meleeAtk.c_str(),u8"MELEE",monster.fileName);
-	findAndReplace(monster.file,monster.rangedAtk.c_str(),u8"RANGED",monster.fileName);
+	findAndReplace(monster.file,monster.meleeAtk.c_str(),u8"MELEE_FULL_ATTACK",monster.fileName);
+	findAndReplace(monster.file,monster.rangedAtk.c_str(),u8"RANGED_FULL_ATTACK",monster.fileName);
 
 	findAndReplace(monster.file,monster.space.c_str(),u8"SPACE",monster.fileName);
 	findAndReplace(monster.file,monster.reach.c_str(),u8"REACH",monster.fileName);
 
-	findAndReplace(monster.file,monster.specAtk.c_str(),u8"SPECATK",monster.fileName);
+	findAndReplace(monster.file,monster.specAtk.c_str(),u8"SPECIAL_ATTACKS",monster.fileName);
+
+	findAndReplace(monster.file,monster.slas.c_str(),u8"SLA",monster.fileName);
 
 
 
@@ -249,32 +259,32 @@ void doPf() {
 
 	findAndReplace(monster.file,to_string(monster.maneuvers.cmb).c_str(),u8"CMB",monster.fileName);
 	findAndReplace(monster.file,to_string(monster.maneuvers.cmd).c_str(),u8"CMD",monster.fileName);
-	findAndReplace(monster.file,monster.maneuvers.specialCmb.c_str(),u8"SPECCMB",monster.fileName);
-	findAndReplace(monster.file,monster.maneuvers.specialCmd.c_str(),u8"SPECCMD",monster.fileName);
+	findAndReplace(monster.file,monster.maneuvers.specialCmb.c_str(),u8"SPECIAL_CMB",monster.fileName);
+	findAndReplace(monster.file,monster.maneuvers.specialCmd.c_str(),u8"SPECIAL_CMD",monster.fileName);
 
-	findAndReplace(monster.file,monster.featList.c_str(),u8"FEATLIS",monster.fileName);
-	findAndReplace(monster.file,monster.skillList.c_str(),u8"SKILIST",monster.fileName);
-	findAndReplace(monster.file,monster.languageList.c_str(),u8"LANGLIS",monster.fileName);
+	findAndReplace(monster.file,monster.featList.c_str(),u8"FEAT_LIST",monster.fileName);
+	findAndReplace(monster.file,monster.skillList.c_str(),u8"SKILL_LIST",monster.fileName);
+	findAndReplace(monster.file,monster.languageList.c_str(),u8"LANGUAGE_LIST",monster.fileName);
 
-	findAndReplace(monster.file,monster.specialQualities.c_str(),u8"SQLIST",monster.fileName);
-
-
-
-
-	findAndReplace(monster.file,monster.environmentList.c_str(),u8"ENVLIST",monster.fileName);
-	findAndReplace(monster.file,monster.groupList.c_str(),u8"GRPLIST",monster.fileName);
-	findAndReplace(monster.file,monster.lootList.c_str(),u8"LOOTLST",monster.fileName);
+	findAndReplace(monster.file,monster.specialQualities.c_str(),u8"SPECIAL_QUALITIES_LIST",monster.fileName);
 
 
 
 
-	findAndReplace(monster.file,monster.specialAbilities.c_str(),u8"SPECABL",monster.fileName);
+	findAndReplace(monster.file,monster.environmentList.c_str(),u8"ENVIRONMENT_LIST",monster.fileName);
+	findAndReplace(monster.file,monster.groupList.c_str(),u8"GROUPING_LIST",monster.fileName);
+	findAndReplace(monster.file,monster.lootList.c_str(),u8"ITEM_LIST",monster.fileName);
+
+
+
+
+	findAndReplace(monster.file,monster.specialAbilities.c_str(),u8"SPECIAL_ABILITIES",monster.fileName); //*/
 
 
 
 	monster.file.close();
 
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "Monster closed" << endl;
 	#endif
 
@@ -286,21 +296,6 @@ void doPf() {
 
 void findAndReplace(fstream& outfile, const char* replacement, const char* searchKey, const char* fileName) {
 
-	/* I am at a total loss to explain why this code doesn't fucking work if
-	 * you give it a search key longer than 8 characters (including the null
-	 * terminator). If you have even the slightest fucking clue, please tell
-	 * me why. I'd love to know. I could have gotten this first version of the
-	 * code out nearly a month earlier if I hadn't been trying to figure out
-	 * why this piece of shit doesn't work. The reason this segment of the
-	 * code is such a giant fucking mess is because I couldn't figure out what
-	 * the fuck is wrong with it.
-	 *
-	 * Seriously, if you know, please share with the class. I'd love to know.
-	 * It's probably something stupid, but at least then I'd know how I
-	 * managed to FUBAR this so hard. I'd honestly be impressed with myself if
-	 * I wasn't so pissed off.
-	 */
-
 	fstream part1;
 	fstream part2;
 	long currentPos = 0;
@@ -308,12 +303,13 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 	char current;
 	bool located = false;
 
-	char* potentialMatch = new char[keyLength];
+	char* potentialMatch = new char[/*1 +*/ keyLength];
+	//potentialMatch[keyLength] = '\0';
 
 	outfile.seekp(0L, ios::beg);
 	outfile.seekg(0L, ios::beg);
 
-	/*#ifdef _DEBUG
+	/*#ifdef DEBUG_
 	cout << "find-replace entered" << endl;
 	#endif*/
 
@@ -323,8 +319,8 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 
 		current = outfile.peek();
 
-		/*#ifdef _DEBUG
-		cout << "Initial character found: " << *//*static_cast<int>(current)*//* current<<endl;
+		#ifdef DEBUG_
+		cout << "Initial character found: " << /*static_cast<int>(current)*/ current<<endl;
 		#endif //*/
 
 		for (int x=0; x <= keyLength; x++) {
@@ -332,7 +328,7 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 				potentialMatch[x] = current;
 
 
-				#ifdef _DEBUG
+				#ifdef DEBUG_
 				cout << "Next character found!" << endl;
 
 				cout << "Potential match (for loop): " << potentialMatch << endl;
@@ -342,7 +338,7 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 
 			} else {
 
-				#ifdef _DEBUG
+				#ifdef DEBUG_
 				cout << "Not found at this point, we found: " << potentialMatch << endl;
 				#endif //*/
 				break;
@@ -351,11 +347,11 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 
 
 
-		if (!strcmp(potentialMatch,searchKey)) {
+		if (!strncmp(potentialMatch,searchKey,keyLength)) {
 			located = true;
 		}
 
-		#ifdef _DEBUG
+		#ifdef DEBUG_
 		cout << "Potential match (while loop): " << potentialMatch << endl;
 		#endif //*/
 
@@ -365,7 +361,7 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 		cout << "Match not found, exiting program." << endl;
 		exit(0);
 	}
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "Found match" << endl;
 	#endif //*/
 
@@ -400,7 +396,7 @@ long findDollar(fstream& monster, long currentPos) {
 
 	monster.seekg(currentPos, ios::beg);
 
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "$ found at position: " << currentPos << endl;
 	#endif
 
@@ -409,7 +405,7 @@ long findDollar(fstream& monster, long currentPos) {
 
 
 void insertIntoFile(fstream& monster, const char* toInsert, long beforeDollar, int keyLength, const char* baseFileName) {
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "entered insertIntoFile()" << endl;
 	#endif
 
@@ -444,19 +440,19 @@ void insertIntoFile(fstream& monster, const char* toInsert, long beforeDollar, i
 
 	part2.seekg(0L, ios::beg);
 
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "toInsert: " << toInsert << endl;
 	#endif
 
 	part1 << toInsert;
 
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "inserted" << endl;
 	#endif
 
 	part1 << part2.rdbuf();
 
-	#ifdef _DEBUG
+	#ifdef DEBUG_
 	cout << "cat part1 and part2" << endl;
 	#endif
 
@@ -496,26 +492,26 @@ void printHelp() {
 	cout << "Run the program with no arguments to use it. It will output an HTML file in the" << endl;
 		cout << "\tcurrent directory." << endl;
 /******************************************************************************/
-#if (_PLATFAM == __unix)
+#if (PLATFAM_ == __unix)
 	cout << "Use --version to print version info." << endl;
 #endif
-#if (_PLATFAM == WIN32)
+#if (PLATFAM_ == WIN32_)
 	cout << "Use --version to print version info." << endl; //Compatibility note: Version text is same because I don't know what's idiomatic for Windows
 #endif
 /******************************************************************************/
-#if (_PLATFAM == __unix)
+#if (PLATFAM_ == __unix)
 	cout << "Use --ogl to print OGL-mandated information about product identity and open game" << endl;
 		cout << "\tcontent." << endl;
 #endif
-#if (_PLATFAM == WIN32)
+#if (PLATFAM_ == WIN32_)
 	cout << "Use /o to print OGL-mandated information about product identity and open game" << endl;
 		cout << "\tcontent." << endl;
 #endif
 /******************************************************************************/
-#if (_PLATFAM == __unix)
+#if (PLATFAM_ == __unix)
 	cout << "Use --help to print this text." << endl;
 #endif
-#if (_PLATFAM == WIN32)
+#if (PLATFAM_ == WIN32_)
 	cout << "Use /? to print this text." << endl;
 #endif
 /******************************************************************************/
@@ -543,16 +539,16 @@ void printOgl() {
 
 void printVersion() {
 	cout << "PFSB, a PF RPG monster Stat Block generator" << endl << endl;
-	#ifndef _DEBUG
-	cout << "PFSB version " << _VERSION << endl;
+	#ifndef DEBUG_
+	cout << "PFSB version " << VERSION_ << endl;
 	#endif
-	#ifdef _DEBUG
-	cout << "PFSB debug version " << _VERSION << endl;
+	#ifdef DEBUG_
+	cout << "PFSB debug version " << VERSION_ << endl;
 	#endif
 	cout << "Distributed under the Open Gaming License v1.0a. A copy of the OGL should have" << endl;
 		cout << "been included with this program, as indicated in section 10 of OGLv1.0a, as" << endl;
 		cout << "should a copy of the CONTRIBUTORS text file." << endl;
-	cout << endl <<  "Copyright (C) 2017 Frozen Mustelid and contributors"<< endl;
+	cout << endl <<  "Copyright (C) 2017-2018 Frozen Mustelid and contributors"<< endl;
 }
 
 

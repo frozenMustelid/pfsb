@@ -1,9 +1,9 @@
 #ifndef VERSION_HPP
 #define VERSION_HPP
 
-//#define _DEBUG
+#define DEBUG_
 
-#define _VERSION "0.2"
+#define VERSION_ "0.3-dev"
 
 
 #endif
