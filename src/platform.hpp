@@ -7,12 +7,12 @@
 //PLATFORM_ currently unused
 //commented out to make it compile+run on other *nixes
 
-//#ifdef __unix
+#ifdef __unix
 	#define _pfrpg_template "/usr/share/pfsb/pfrpg/html/pfrpg.html"
 	#define _dir_separator_char '/'
 	//Pretty sure the char is unused
 	#define _dir_separator_string "/"
-//#endif
+#endif
 
 /*#ifdef (WIN32_)
 

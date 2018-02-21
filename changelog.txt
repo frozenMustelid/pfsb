@@ -10,8 +10,10 @@ v00.003
      +Added larger creature name field at top
      +Added SLAs
      +Improved alignment selector
+	 +Empty fields will now be marked as "None" on the finished HTML file
 
 	 *Added new files, moved some code from old files the new ones
+	 *Added new style rules to CSS
 	 *Changed #define macros from _MACRO_NAME to _macro_name
      *Updated Known Issues.txt
 	 *Template file now uses more descriptive names

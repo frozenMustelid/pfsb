@@ -1,9 +1,11 @@
 #ifndef PFMON_HPP
 #define PFMON_HPP
 
+#include "commonFunctions.hpp"
 #include "PfMeta.hpp"
 
 #include <fstream>
+using namespace std;
 
 class PfMon
 {
@@ -183,6 +185,26 @@ private:
 \******************************************************************************/
 
 	string addSlaListItem();
+
+/******************************************************************************\
+ *                                 SYSTEM                                     *
+\******************************************************************************/
+
+	const string noneString = "<p class=\"none\">None</p>";
+
+	inline void setEmptyStringToNone(string& toAlter) {
+
+		if (toAlter.empty()) {
+			toAlter = noneString;
+		}
+		return;
+	}
+
+	/* Like compilers actually care if you inline the function. You'd think that
+	 * all pretense that compilers care what the programmers think would make
+	 * the code more performant would have been lost after they deprecated the
+	 * register keyword, but I guess we can't admit that yet.
+	 */
 };
 
 #endif // PFMON_HPP

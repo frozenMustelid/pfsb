@@ -1,8 +1,9 @@
 #include "commonFunctions.hpp"
 #include "errors.hpp"
-#include "platform.hpp"
 #include "PfMon.hpp"
 #include "PfMeta.hpp"
+#include "platform.hpp"
+#include "version.hpp"
 
 #include <cmath>
 #undef HUGE
@@ -26,9 +27,9 @@ string PfMon::fetchMonNameTop() {
 	getline(cin,name);
 
 	if (name.empty()) {
-		this->monNameTop = this->monName;
+		monNameTop = monName;
 	} else {
-		this->monNameTop = name;
+		monNameTop = name;
 	}
 
 	return name;
@@ -327,7 +328,7 @@ long PfMon::crAndXp() {
 string PfMon::fetchAlignment() {
 
 	string choice;
-	Alignment choiceUsed;
+	char choiceDetected;
 //string version used because getline more robust than cin >> int
 //typed as alignment instead of int because int was type erroring
 	bool valid = false;
@@ -353,58 +354,58 @@ string PfMon::fetchAlignment() {
 		cout << "Alignment: " << endl;
 		getline(cin,choice);
 
-		choiceUsed = static_cast<Alignment>(choice[0] - ASCII_NUM_OFFSET_);
+		choiceDetected = choice[0];
 
-		switch (choiceUsed) {
-			case Alignment::LAWFUL_GOOD: {
+		switch (choiceDetected) {
+			case '1': {
 
 				alignment = "LG";
 				valid = true;
 				break;
 			}
-			case Alignment::NEUTRAL_GOOD: {
+			case '2': {
 
 				alignment = "NG";
 				valid = true;
 				break;
 			}
-			case Alignment::CHAOTIC_GOOD: {
+			case '3': {
 
 				alignment = "CG";
 				valid = true;
 				break;
 			}
-			case Alignment::LAWFUL_NEUTRAL: {
+			case '4': {
 
 				alignment = "LN";
 				valid = true;
 				break;
 			}
-			case Alignment::TRUE_NEUTRAL: {
+			case '5': {
 
 				alignment = "TN";
 				valid = true;
 				break;
 			}
-			case Alignment::CHAOTIC_NEUTRAL: {
+			case '6': {
 
 				alignment = "CN";
 				valid = true;
 				break;
 			}
-			case Alignment::LAWFUL_EVIL: {
+			case '7': {
 
 				alignment = "LE";
 				valid = true;
 				break;
 			}
-			case Alignment::NEUTRAL_EVIL: {
+			case '8': {
 
 				alignment = "NE";
 				valid = true;
 				break;
 			}
-			case Alignment::CHAOTIC_EVIL: {
+			case '9': {
 
 				alignment = "CE";
 				valid = true;
@@ -413,6 +414,11 @@ string PfMon::fetchAlignment() {
 
 			default: {
 				cout << "Enter a number between 1 and 9!" << endl;
+				#ifdef _debug
+				cout << "You entered (int) : " << static_cast<int>(choiceDetected) << endl;
+				cout << "You entered (char): " << static_cast<char>(choiceDetected) << endl;
+				cout << "You entered (raw) : " << choice << endl;
+				#endif
 			}
 		}
 	} while (!(valid));
@@ -550,6 +556,8 @@ string PfMon::fetchAura() {
 
 	cout << "List the monster's aura/auras here: ";
 	getline(cin,aura);
+
+	setEmptyStringToNone(aura);
 
 	return aura;
 }
@@ -754,7 +762,7 @@ AC PfMon::determineAC() {
 
 	ac.flatFootAc = ac.totalAc - (ac.dex + ac.dodge);
 
-	/*#ifdef DEBUG_
+	/*#ifdef _debug
 	cout << "After calculations" << endl;
 	cout << "Armor bonus (0 if n/a): " << to_string(ac.armor) << endl;
 	cout << "Shield bonus: " << to_string(ac.shield) << endl;
@@ -780,7 +788,7 @@ AC PfMon::determineAC() {
 
 	ac.breakdown = calculateAcBreakdown();
 
-	/*#ifdef DEBUG_
+	/*#ifdef _debug
 	cout << "After AC breakdown calculated" << endl;
 	cout << "Armor bonus (0 if n/a): " << to_string(ac.armor) << endl;
 	cout << "Shield bonus: " << to_string(ac.shield) << endl;
@@ -938,7 +946,7 @@ int PfMon::calculateHp() {
 	hp = hd.bonus + static_cast<int>(hdAverage) + (abilities.conMod * hd.totalHd);
 
 
-	/*#ifdef DEBUG_
+	/*#ifdef _debug
 	cout << endl << "determineHP()" << endl << endl;
 	cout << "HP total: " << hp << endl;
 	cout << "HD average: " << hdAverage << endl;
@@ -963,6 +971,8 @@ string PfMon::fetchDefensiveAbilities() {
 
 	cout << "List the monster's defensive abilities here: ";
 	getline(cin,defensiveAbilities);
+
+	setEmptyStringToNone(defensiveAbilities);
 
 	return defensiveAbilities;
 }
@@ -992,6 +1002,8 @@ string PfMon::determineImmunities() {
 	cout << "List the monster's immunities here: ";
 	getline(cin,immunities);
 
+	setEmptyStringToNone(defensiveAbilities);
+
 	return immunities;
 }
 
@@ -999,6 +1011,8 @@ string PfMon::fetchResistances() {
 
 	cout << "List the monster's resistances here: ";
 	getline(cin,resistances);
+
+	setEmptyStringToNone(defensiveAbilities);
 
 	return resistances;
 }
@@ -1008,6 +1022,8 @@ string PfMon::fetchWeaknesses() {
 	cout << "List the monster's weaknesses here: ";
 	getline(cin,weaknesses);
 
+	setEmptyStringToNone(defensiveAbilities);
+
 	return weaknesses;
 }
 
@@ -1016,6 +1032,8 @@ string PfMon::fetchDr() {
 	cout << "List the monster's DR here: ";
 	getline(cin,dr);
 
+	setEmptyStringToNone(defensiveAbilities);
+
 	return dr;
 }
 
@@ -1023,6 +1041,8 @@ string PfMon::fetchSr() {
 
 	cout << "List the monster's SR here: ";
 	getline(cin,sr);
+
+	setEmptyStringToNone(defensiveAbilities);
 
 	return sr;
 }
@@ -1173,7 +1193,7 @@ Saves PfMon::determineSaves() {
 	saves.reflex += abilities.dexMod;
 	saves.will   += abilities.wisMod;
 
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "Good fort? " << saves.goodFort << endl;
 	cout << "Good reflex? " << saves.goodReflex << endl;
 	cout << "Good will? " << saves.goodWill << endl;
@@ -1466,6 +1486,8 @@ string PfMon::fetchSpecialAttacks() {
 	cout << "List the monster's special attacks here: ";
 	getline(cin,specAtk);
 
+	setEmptyStringToNone(defensiveAbilities);
+
 	return specAtk;
 }
 
@@ -1480,7 +1502,7 @@ string PfMon::determineSlas() {
 	cout << "Does the monster have any SLAs? ";
 	getline(cin, choice);
 
-	if (answerIsYes(choice)) {
+	if (_answerIsYes(choice)) {
 
 		cout << "CL: ";
 		cin >> cl;
@@ -1495,10 +1517,10 @@ string PfMon::determineSlas() {
 		do {
 			addSlaListItem();
 
-			cout << "Continue? ";
+			cout << "More SLAs? ";
 			getline(cin, choice);
 
-		} while (!(answerIsYes(choice)));
+		} while (_answerIsYes(choice));
 
 		slas = encloseInElement(slas,"ul");
 
@@ -1534,14 +1556,16 @@ string PfMon::addSlaListItem() {
 
 		listItem += spellInfo.name + " " + encloseInElement(encloseInParen(spellInfo.dc), "span", "class=\"dc\"");
 
-		cout << "Continue? ";
+		cout << "More of this frequency? ";
 		getline(cin, choice);
 
-		if (answerIsYes(choice)) {
+		clearBuffer();
+
+		if (_answerIsYes(choice)) {
 			listItem += ", ";
 		}
 
-	} while (!(answerIsYes(choice)));
+	} while (_answerIsYes(choice));
 	
 	listItem = encloseInElement(listItem, "li");
 	slas += listItem;
@@ -1614,7 +1638,7 @@ Abilities PfMon::fetchAbilities() {
 		abilities.conMod = 0;
 	}
 
-#ifdef DEBUG_
+#ifdef _debug
 	cout << "Abilities: " << endl;
 
 	cout << "STR   score: " << abilities.str << endl;
@@ -1626,7 +1650,7 @@ Abilities PfMon::fetchAbilities() {
 	cout << "Display DEX: " << abilities.displayDex << endl << endl;
 
 	cout << "CON   score: " << abilities.con << endl;
-	cout << "STR     CON: " << abilities.conMod << endl;
+	cout << "CON     mod: " << abilities.conMod << endl;
 	cout << "Display CON: " << abilities.displayCon << endl << endl;
 
 	cout << "INT   score: " << abilities.intelligence << endl;

@@ -50,7 +50,7 @@ int PfSpell::fetchSpellLevel() {
 		cin >> spellLevel;
 		clearBuffer();
 
-		if (betweeninc(spellLevel,0,9)) {
+		if (_betweeninc(spellLevel,0,9)) {
 			valid = true;
 		} else {
 			cout << "Spell level must be between 0 and 9." << endl;
@@ -69,10 +69,10 @@ int PfSpell::determineDc(int castingStatMod) {
 
 int PfSpell::fetchMiscDcBonuses() {
 
-	clearBuffer();
-
 	cout << "Amount of misc. DC bonuses (not casting stat/spell level/10 base): ";
 	cin >> miscDcBonuses;
+
+	clearBuffer();
 
 	return miscDcBonuses;
 }

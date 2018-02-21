@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 		if (argc == 1) {
 		doPf();
 
-		#ifdef DEBUG_
+		#ifdef _debug
 		cout << "Exited doProgram()" << endl;
 		#endif
 
@@ -100,7 +100,7 @@ void doPf() {
 \*****************************************************************************/
 
 
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "Monster name: " << monster.monName << endl;
 	cout << "File path: " << monster.fileName << endl;
 	#endif
@@ -150,7 +150,7 @@ void doPf() {
 
 	monster.fetchSpecialAbilities(); //*/
 
-	#ifndef DEBUG_
+	#ifndef _debug
 	monster.prepareWrite();
 	#else
 	cout << monster.prepareWrite();
@@ -161,12 +161,12 @@ void doPf() {
  *                                WRITE FILE                                 *
 \*****************************************************************************/
 
-	findAndReplace(monster.file,VERSION_,u8"PROGRAM_VERSION",monster.fileName);
+	findAndReplace(monster.file,_version,u8"PROGRAM_VERSION",monster.fileName);
 
 	tempStorage = "PFSB - ";
 	tempStorage += monster.monName;
 	findAndReplace(monster.file,tempStorage.c_str(),u8"PFRPG_MONNAME",monster.fileName);
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "Monster header written" << endl;
 	#endif
 
@@ -174,26 +174,26 @@ void doPf() {
 	findAndReplace(monster.file,monster.description.c_str(),u8"MONSTER_DESCRIPTION",monster.fileName);
 
 	findAndReplace(monster.file,monster.monName.c_str(),u8"MONSTER_NAME",monster.fileName);
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "Monname written" << endl;
 	#endif
 
 	findAndReplace(monster.file,monster.cr,u8"CR",monster.fileName);
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "CR written" << endl;
 	#endif
 	findAndReplace(monster.file,(monster.xp.c_str()),u8"XP",monster.fileName);
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "XP written" << endl;
 	cout << endl << endl << endl << "Value (c++-string): " << monster.xp << endl << endl << endl;
 	cout << endl << endl << endl << "Value (c - string): " << monster.xp.c_str() << endl << endl << endl;
 	#endif
 	findAndReplace(monster.file,monster.alignment.c_str(),u8"ALIGNMENT",monster.fileName);
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "Alignment written" << endl;
 	#endif
 	findAndReplace(monster.file,monster.creatSizeWords.c_str(),u8"SIZE",monster.fileName);
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "Size written: " << monster.creatSizeWords << endl;
 	#endif
 
@@ -284,7 +284,7 @@ void doPf() {
 
 	monster.file.close();
 
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "Monster closed" << endl;
 	#endif
 
@@ -309,7 +309,7 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 	outfile.seekp(0L, ios::beg);
 	outfile.seekg(0L, ios::beg);
 
-	/*#ifdef DEBUG_
+	/*#ifdef _debug
 	cout << "find-replace entered" << endl;
 	#endif*/
 
@@ -319,7 +319,7 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 
 		current = outfile.peek();
 
-		#ifdef DEBUG_
+		#ifdef _debug
 		cout << "Initial character found: " << /*static_cast<int>(current)*/ current<<endl;
 		#endif //*/
 
@@ -328,7 +328,7 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 				potentialMatch[x] = current;
 
 
-				#ifdef DEBUG_
+				#ifdef _debug
 				cout << "Next character found!" << endl;
 
 				cout << "Potential match (for loop): " << potentialMatch << endl;
@@ -338,7 +338,7 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 
 			} else {
 
-				#ifdef DEBUG_
+				#ifdef _debug
 				cout << "Not found at this point, we found: " << potentialMatch << endl;
 				#endif //*/
 				break;
@@ -351,7 +351,7 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 			located = true;
 		}
 
-		#ifdef DEBUG_
+		#ifdef _debug
 		cout << "Potential match (while loop): " << potentialMatch << endl;
 		#endif //*/
 
@@ -361,7 +361,7 @@ void findAndReplace(fstream& outfile, const char* replacement, const char* searc
 		cout << "Match not found, exiting program." << endl;
 		exit(0);
 	}
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "Found match" << endl;
 	#endif //*/
 
@@ -396,7 +396,7 @@ long findDollar(fstream& monster, long currentPos) {
 
 	monster.seekg(currentPos, ios::beg);
 
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "$ found at position: " << currentPos << endl;
 	#endif
 
@@ -405,7 +405,7 @@ long findDollar(fstream& monster, long currentPos) {
 
 
 void insertIntoFile(fstream& monster, const char* toInsert, long beforeDollar, int keyLength, const char* baseFileName) {
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "entered insertIntoFile()" << endl;
 	#endif
 
@@ -440,19 +440,19 @@ void insertIntoFile(fstream& monster, const char* toInsert, long beforeDollar, i
 
 	part2.seekg(0L, ios::beg);
 
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "toInsert: " << toInsert << endl;
 	#endif
 
 	part1 << toInsert;
 
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "inserted" << endl;
 	#endif
 
 	part1 << part2.rdbuf();
 
-	#ifdef DEBUG_
+	#ifdef _debug
 	cout << "cat part1 and part2" << endl;
 	#endif
 
@@ -539,11 +539,11 @@ void printOgl() {
 
 void printVersion() {
 	cout << "PFSB, a PF RPG monster Stat Block generator" << endl << endl;
-	#ifndef DEBUG_
-	cout << "PFSB version " << VERSION_ << endl;
+	#ifndef _debug
+	cout << "PFSB version " << _version << endl;
 	#endif
-	#ifdef DEBUG_
-	cout << "PFSB debug version " << VERSION_ << endl;
+	#ifdef _debug
+	cout << "PFSB debug version " << _version << endl;
 	#endif
 	cout << "Distributed under the Open Gaming License v1.0a. A copy of the OGL should have" << endl;
 		cout << "been included with this program, as indicated in section 10 of OGLv1.0a, as" << endl;

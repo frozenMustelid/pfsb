@@ -1,6 +1,6 @@
 /* Monster made using PFSB. Find it at https://github.com/frozenMustelid/pfsb
  * 
- * CSS Stylesheet version 0.3-dev-2018-01-11.                                                */
+ * CSS Stylesheet version 0.3-dev-2018-02-19.                                                */
 
 p {
 	font-family:sans-serif;
@@ -26,6 +26,10 @@ ul {
 	font-weight:bold;
 }
 
+.none {
+	font-weight:bold;
+}
+
 .sectionheader {
 	font-family:sans-serif;
 	border-top-style:solid;
@@ -42,7 +46,6 @@ ul {
 #mondesc {
 	font-family:serif;
 	font-style:italic;
-	font-size:small;
 }
 
 #monheader {

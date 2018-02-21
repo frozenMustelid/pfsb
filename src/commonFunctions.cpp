@@ -34,11 +34,11 @@ string encloseInParen(string toEnclose, string enclosingCharacters /*= "()"*/) {
 	return assembledString;
 }
 
-string encloseInParen(int toEnclose, string enclosingCharacters /*= "()"*/) {
-	return encloseInParen(to_string(toEnclose),enclosingCharacters);
-}
+/*string encloseInParen(int toEnclose, string enclosingCharacters /*= "()"*/ /*) {
 
-string encloseInElement(string toEnclose, string enclosingTag, string attributes/*= ""*/) {
+}*/
+
+string encloseInElement(const string& toEnclose, const string& enclosingTag, const string& attributes/*= ""*/) {
 
 	string assembledString = "<" + enclosingTag + " " + attributes + ">";
 
@@ -68,7 +68,7 @@ string determineOrdinal(int number) {
 
 string determineOrdinal(std::string number) {
 
-	if (betweeninc(number.length(),'0'+ASCII_NUM_OFFSET_,'9'+ASCII_NUM_OFFSET_)) {
+	if (_betweeninc(number[number.length() - 1] - '0',0,9)) {
 		return determineOrdinal(number);
 	} else {
 		return "";
